@@ -101,7 +101,6 @@ export default function SimpleImageGenerator() {
           <h1 className="text-2xl font-bold">Workers AI Image Generator</h1>
           <h2 className="text-lg mb-8">
             Powered by <a href="https://developers.cloudflare.com/workers-ai" className="text-blue-500 hover:underline">Cloudflare Workers AI</a>.
-            Source code available on <a href="https://github.com/kristianfreeman/workers-ai-image-playground" className="text-blue-500 hover:underline">GitHub</a>.&nbsp;
             <Link className="underline" href="/images">See all generated images.</Link>
           </h2>
         </div>
