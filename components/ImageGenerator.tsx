@@ -61,7 +61,7 @@ export default function SimpleImageGenerator() {
         })
         .catch(console.error)
     }
-  }, [FIXED_MODEL_ID])//[selectedModel])
+  }, [selectedModel])
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
@@ -83,12 +83,11 @@ export default function SimpleImageGenerator() {
     } finally {
       setIsLoading(false)
     }
-  }, [FIXED_MODEL_ID, inputValues])//[selectedModel, inputValues])
+  }, [selectedModel, inputValues])
 
   const isFormValid = useCallback(() => {
-    //return selectedModel && schema?.input.required.every(field => inputValues[field] !== undefined && inputValues[field] !== '')
-	return FIXED_MODEL_ID && schema?.input.required.every(field => inputValues[field] !== undefined && inputValues[field] !== '')
-  }, [FIXED_MODEL_ID, schema, inputValues])//[selectedModel, schema, inputValues])
+    return selectedModel && schema?.input.required.every(field => inputValues[field] !== undefined && inputValues[field] !== '')
+  }, [selectedModel, schema, inputValues])
 
   const handleDownload = useCallback(() => {
     if (generatedImage) {
