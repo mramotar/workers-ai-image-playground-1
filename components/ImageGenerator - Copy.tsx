@@ -4,10 +4,14 @@ import React, { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Loader2, Download } from "lucide-react"
-import Link from "next/link"
+import Link from "next/link";
 
-const FIXED_MODEL_ID = "flux-1-schnell"
+type Model = {
+  id: string
+  name: string
+}
 
 type SchemaProperty = {
   type: string
@@ -25,25 +29,36 @@ type Schema = {
 }
 
 export default function SimpleImageGenerator() {
+  const [models, setModels] = useState<Model[]>([])
+  const [selectedModel, setSelectedModel] = useState<string>("")
   const [schema, setSchema] = useState<Schema | null>(null)
   const [inputValues, setInputValues] = useState<Record<string, any>>({})
   const [isLoading, setIsLoading] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch(`/api/schema?model=${FIXED_MODEL_ID}`)
+    fetch("/api/models")
       .then((res) => res.json())
-      .then((ns) => {
-        const newSchema = ns as Schema
-        setSchema(newSchema)
-        const defaultValues = Object.entries(newSchema.input.properties).reduce((acc, [key, prop]) => {
-          if (prop.default !== undefined) acc[key] = prop.default
-          return acc
-        }, {} as Record<string, any>)
-        setInputValues(defaultValues)
-      })
+      .then((data) => setModels(data as Model[]))
       .catch(console.error)
   }, [])
+
+  useEffect(() => {
+    if (selectedModel) {
+		fetch(`/api/schema?model=${selectedModel}`)
+	    .then((res) => res.json())
+        .then((ns) => {
+          const newSchema = ns as Schema
+          setSchema(newSchema)
+          const defaultValues = Object.entries(newSchema.input.properties).reduce((acc, [key, prop]) => {
+            if (prop.default !== undefined) acc[key] = prop.default
+            return acc
+          }, {} as Record<string, any>)
+          setInputValues(defaultValues)
+        })
+        .catch(console.error)
+    }
+  }, [selectedModel])
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
@@ -52,7 +67,7 @@ export default function SimpleImageGenerator() {
       const response = await fetch("/api/generate_image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
+        body: JSON.stringify({ model: selectedModel, ...inputValues }),
       })
       if (response.ok) {
         setGeneratedImage(await response.text())
@@ -64,11 +79,11 @@ export default function SimpleImageGenerator() {
     } finally {
       setIsLoading(false)
     }
-  }, [inputValues])
+  }, [selectedModel, inputValues])
 
   const isFormValid = useCallback(() => {
-    return schema?.input.required.every(field => inputValues[field] !== undefined && inputValues[field] !== '')
-  }, [schema, inputValues])
+    return selectedModel && schema?.input.required.every(field => inputValues[field] !== undefined && inputValues[field] !== '')
+  }, [selectedModel, schema, inputValues])
 
   const handleDownload = useCallback(() => {
     if (generatedImage) {
@@ -92,8 +107,17 @@ export default function SimpleImageGenerator() {
         <div className="flex-grow overflow-auto p-4">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">AI Model</label>
-              <div className="text-sm font-medium text-gray-900">flux-1-schnell</div>
+              <label htmlFor="model" className="block text-sm font-medium text-gray-700">AI Model</label>
+              <Select onValueChange={setSelectedModel} value={selectedModel}>
+                <SelectTrigger id="model">
+                <SelectValue placeholder="Select an AI model" />
+                </SelectTrigger>
+                <SelectContent>
+                  {models.map(({ id, name }) => (
+                    <SelectItem key={id} value={id}>{name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             {schema && Object.entries(schema.input.properties).map(([key, value]) => (
               <div key={key}>
