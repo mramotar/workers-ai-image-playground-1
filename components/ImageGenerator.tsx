@@ -36,7 +36,7 @@ export default function SimpleImageGenerator() {
   const [isLoading, setIsLoading] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   
-  const FIXED_MODEL_ID = "flux-1-schnell"
+  const FIXED_MODEL_ID = "@cf/black-forest-labs/flux-1-schnell"
 
   useEffect(() => {
     fetch("/api/models")
