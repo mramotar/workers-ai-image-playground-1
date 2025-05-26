@@ -70,7 +70,8 @@ export default function SimpleImageGenerator() {
       const response = await fetch("/api/generate_image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: selectedModel, ...inputValues }),
+        //body: JSON.stringify({ model: selectedModel, ...inputValues }),
+		body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
       })
       if (response.ok) {
         setGeneratedImage(await response.text())
