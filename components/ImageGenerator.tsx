@@ -112,7 +112,7 @@ export default function SimpleImageGenerator() {
               <label htmlFor="model" className="block text-sm font-medium text-gray-700">AI Model</label>
               <Select onValueChange={setSelectedModel} value={selectedModel}>
                 <SelectTrigger id="model">
-//                  <SelectValue placeholder="Select an AI model" />
+                  <//SelectValue placeholder="Select an AI model" />
                   <SelectValue placeholder="flux-1-schnell" />
                 </SelectTrigger>
                 <SelectContent>
