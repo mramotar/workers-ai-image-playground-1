@@ -31,7 +31,6 @@ type Schema = {
 export default function SimpleImageGenerator() {
   const [models, setModels] = useState<Model[]>([])
   const [selectedModel, setSelectedModel] = useState<string>("")
-  //const [selectedModel, setSelectedModel] = useState<string>("flux-1-schnell")
   const [schema, setSchema] = useState<Schema | null>(null)
   const [inputValues, setInputValues] = useState<Record<string, any>>({})
   const [isLoading, setIsLoading] = useState(false)
@@ -46,10 +45,8 @@ export default function SimpleImageGenerator() {
 
   useEffect(() => {
     if (selectedModel) {
-		//selectedModel = 'flux-1-schnell'
-        fetch(`/api/schema?model=${selectedModel}`)
-	  //fetch(`/api/schema?model=flux-1-schnell`)
-        .then((res) => res.json())
+		fetch(`/api/schema?model=${selectedModel}`)
+	    .then((res) => res.json())
         .then((ns) => {
           const newSchema = ns as Schema
           setSchema(newSchema)
@@ -111,7 +108,7 @@ export default function SimpleImageGenerator() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="model" className="block text-sm font-medium text-gray-700">AI Model</label>
-              <Select onValueChange={setSelectedModel} value={"flux-1-schnell"}>
+              <Select onValueChange={setSelectedModel} value={selectedModel}>
                 <SelectTrigger id="model">
                 <SelectValue placeholder="Select an AI model" />
                 </SelectTrigger>
