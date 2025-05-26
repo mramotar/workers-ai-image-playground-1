@@ -61,7 +61,7 @@ export default function SimpleImageGenerator() {
         })
         .catch(console.error)
     }
-  }, [selectedModel])
+  }, [FIXED_MODEL_ID])//[selectedModel])
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
@@ -83,11 +83,12 @@ export default function SimpleImageGenerator() {
     } finally {
       setIsLoading(false)
     }
-  }, [selectedModel, inputValues])
+  }, [FIXED_MODEL_ID, inputValues])//[selectedModel, inputValues])
 
   const isFormValid = useCallback(() => {
-    return selectedModel && schema?.input.required.every(field => inputValues[field] !== undefined && inputValues[field] !== '')
-  }, [selectedModel, schema, inputValues])
+    //return selectedModel && schema?.input.required.every(field => inputValues[field] !== undefined && inputValues[field] !== '')
+	return FIXED_MODEL_ID && schema?.input.required.every(field => inputValues[field] !== undefined && inputValues[field] !== '')
+  }, [FIXED_MODEL_ID, schema, inputValues])//[selectedModel, schema, inputValues])
 
   const handleDownload = useCallback(() => {
     if (generatedImage) {
@@ -112,7 +113,7 @@ export default function SimpleImageGenerator() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="model" className="block text-sm font-medium text-gray-700">AI Model</label>
-              <Select onValueChange={setSelectedModel} value={selectedModel}>
+              <Select onValueChange={setSelectedModel} value={FIXED_MODEL_ID}>
                 <SelectTrigger id="model">
                 <SelectValue placeholder="Select an AI model" />
                 </SelectTrigger>
