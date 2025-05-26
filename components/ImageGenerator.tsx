@@ -31,7 +31,7 @@ type Schema = {
 export default function SimpleImageGenerator() {
   const [models, setModels] = useState<Model[]>([])
   //const [selectedModel, setSelectedModel] = useState<string>("")
-  const [selectedModel, setSelectedModel] = "flux-1-schnell"
+  const [selectedModel, setSelectedModel] = useState<string>("flux-1-schnell")
   const [schema, setSchema] = useState<Schema | null>(null)
   const [inputValues, setInputValues] = useState<Record<string, any>>({})
   const [isLoading, setIsLoading] = useState(false)
