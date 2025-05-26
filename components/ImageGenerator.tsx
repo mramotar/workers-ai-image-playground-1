@@ -46,7 +46,7 @@ export default function SimpleImageGenerator() {
 
   useEffect(() => {
     if (selectedModel) {
-		selectedModel = 'flex-1-schnell'
+		//selectedModel = 'flux-1-schnell'
         fetch(`/api/schema?model=${selectedModel}`)
 	  //fetch(`/api/schema?model=flex-1-schnell`)
         .then((res) => res.json())
