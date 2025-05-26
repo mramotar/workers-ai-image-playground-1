@@ -111,9 +111,9 @@ export default function SimpleImageGenerator() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="model" className="block text-sm font-medium text-gray-700">AI Model</label>
-              <Select onValueChange={setSelectedModel} value="flux-1-schnell">
+              <Select onValueChange={setSelectedModel} value={"flux-1-schnell"}>
                 <SelectTrigger id="model">
-                  <SelectValue placeholder="Select an AI model" />
+                <SelectValue placeholder="Select an AI model" />
                 </SelectTrigger>
                 <SelectContent>
                   {models.map(({ id, name }) => (
