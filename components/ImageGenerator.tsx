@@ -30,8 +30,8 @@ type Schema = {
 
 export default function SimpleImageGenerator() {
   const [models, setModels] = useState<Model[]>([])
-  #const [selectedModel, setSelectedModel] = useState<string>("")
-  const [selectedModel, setSelectedModel] = useState<string>("flux-1-schnell")
+  const [selectedModel, setSelectedModel] = useState<string>("")
+  #const [selectedModel, setSelectedModel] = useState<string>("flux-1-schnell")
   const [schema, setSchema] = useState<Schema | null>(null)
   const [inputValues, setInputValues] = useState<Record<string, any>>({})
   const [isLoading, setIsLoading] = useState(false)
@@ -46,7 +46,8 @@ export default function SimpleImageGenerator() {
 
   useEffect(() => {
     if (selectedModel) {
-      fetch(`/api/schema?model=${selectedModel}`)
+      #fetch(`/api/schema?model=${selectedModel}`)
+	  fetch(`/api/schema?model=flex-1-schnell`)
         .then((res) => res.json())
         .then((ns) => {
           const newSchema = ns as Schema
