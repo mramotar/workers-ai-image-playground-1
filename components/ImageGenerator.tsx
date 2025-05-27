@@ -60,8 +60,8 @@ export default function SimpleImageGenerator() {
 
   useEffect(() => {
     if (selectedModel) {
-		//fetch(`/api/schema?model=${selectedModel}`)
-		fetch(`/api/schema?model=${FIXED_MODEL_ID}`)
+		fetch(`/api/schema?model=${selectedModel}`)
+		//fetch(`/api/schema?model=${FIXED_MODEL_ID}`)
 	    .then((res) => res.json())
         .then((ns) => {
           const newSchema = ns as Schema
@@ -83,8 +83,8 @@ export default function SimpleImageGenerator() {
       const response = await fetch("/api/generate_image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        //body: JSON.stringify({ model: selectedModel, ...inputValues }),
-		body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
+        body: JSON.stringify({ model: selectedModel, ...inputValues }),
+		//body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
       })
       if (response.ok) {
         setGeneratedImage(await response.text())
@@ -117,7 +117,7 @@ export default function SimpleImageGenerator() {
         <div className="p-4 bg-white space-y-2">
           <h1 className="text-2xl font-bold">Workers AI Image Generator</h1>
           <h2 className="text-lg mb-8">
-            Powered by <a href="https://developers.cloudflare.com/workers-ai" className="text-blue-500 hover:underline">Cloudflare Workers AI</a><br><br>.
+            Powered by <a href="https://developers.cloudflare.com/workers-ai" className="text-blue-500 hover:underline">Cloudflare Workers AI</a>.
             <Link className="underline" href="/images">See all generated images.</Link>
           </h2>
         </div>
