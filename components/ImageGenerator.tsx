@@ -117,7 +117,7 @@ export default function SimpleImageGenerator() {
         <div className="p-4 bg-white space-y-2">
           <h1 className="text-2xl font-bold">Workers AI Image Generator</h1>
           <h2 className="text-lg mb-8">
-            Powered by <a href="https://developers.cloudflare.com/workers-ai" className="text-blue-500 hover:underline">Cloudflare Workers AI</a>.
+            Powered by <a href="https://developers.cloudflare.com/workers-ai" className="text-blue-500 hover:underline">Cloudflare Workers AI</a><br><br>.
             <Link className="underline" href="/images">See all generated images.</Link>
           </h2>
         </div>
@@ -125,7 +125,7 @@ export default function SimpleImageGenerator() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="model" className="block text-sm font-medium text-gray-700">AI Model</label>
-              <Select onValueChange={setSelectedModel} value={FIXED_MODEL_ID}>
+              <Select onValueChange={setSelectedModel} value={selectedModel}>
                 <SelectTrigger id="model">
                 <SelectValue placeholder="Select an AI model" />
                 </SelectTrigger>
