@@ -38,13 +38,25 @@ export default function SimpleImageGenerator() {
   
   const FIXED_MODEL_ID = "@cf/black-forest-labs/flux-1-schnell"
 
-  useEffect(() => {
-    fetch("/api/models")
+  //useEffect(() => {
+  //  fetch("/api/models")
 	//fetch(`/api/schema?model=${FIXED_MODEL_ID}`)
-      .then((res) => res.json())
-      .then((data) => setModels(data as Model[]))
-      .catch(console.error)
-  }, [])
+//      .then((res) => res.json())
+ //     .then((data) => setModels(data as Model[]))
+  //    .catch(console.error)
+  //}, [])
+  
+  useEffect(() => {
+  fetch("/api/models")
+    .then((res) => res.json())
+    .then((data) => {
+      const filteredModel = (data as Model[]).filter(model => model.id === "flux-1-schnell")
+      setModels(filteredModel)
+    })
+    .catch(console.error)
+}, [])
+  
+  
 
   useEffect(() => {
     if (selectedModel) {
