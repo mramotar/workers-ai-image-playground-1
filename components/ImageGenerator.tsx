@@ -50,7 +50,7 @@ export default function SimpleImageGenerator() {
   fetch("/api/models")
     .then((res) => res.json())
     .then((data) => {
-      const filteredModel = (data as Model[]).filter(model => model.id === "flux-1-schnell")
+      const filteredModel = (data as Model[]).filter(model => model.id === "@cf/black-forest-labs/flux-1-schnell")
       setModels(filteredModel)
     })
     .catch(console.error)
