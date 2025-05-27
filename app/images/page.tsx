@@ -36,8 +36,7 @@ export default function Images() {
           <h1 className="text-2xl font-bold">List Images</h1>
           <h2 className="text-lg mb-8">
             Powered by <a href="https://developers.cloudflare.com/workers-ai" className="text-blue-500 hover:underline">Cloudflare Workers AI</a>.
-            Source code available on <a href="https://github.com/kristianfreeman/workers-ai-image-playground" className="text-blue-500 hover:underline">GitHub</a>.
-          </h2>
+            </h2>
         </div>
 
         <div className="p-4 flex flex-col gap-4">
