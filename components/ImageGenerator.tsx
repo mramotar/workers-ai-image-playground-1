@@ -45,7 +45,7 @@ export default function SimpleImageGenerator() {
  //     .then((data) => setModels(data as Model[]))
   //    .catch(console.error)
   //}, [])
-  
+  //
   useEffect(() => {
   fetch("/api/models")
     .then((res) => res.json())
