@@ -36,7 +36,8 @@ export default function SimpleImageGenerator() {
   const [isLoading, setIsLoading] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   
-  const FIXED_MODEL_ID = "@cf/black-forest-labs/flux-1-schnell"
+  //const FIXED_MODEL_ID = "@cf/black-forest-labs/flux-1-schnell"
+  const FIXED_MODEL_ID = "@cf/leonardo/lucid-origin"
 
   //useEffect(() => {
   //  fetch("/api/models")
@@ -50,7 +51,8 @@ export default function SimpleImageGenerator() {
   fetch("/api/models")
     .then((res) => res.json())
     .then((data) => {
-      const filteredModel = (data as Model[]).filter(model => model.id === "@cf/black-forest-labs/flux-1-schnell")
+      //const filteredModel = (data as Model[]).filter(model => model.id === "@cf/black-forest-labs/flux-1-schnell")
+	  const filteredModel = (data as Model[]).filter(model => model.id === "@cf/leonardo/lucid-origin")
       setModels(filteredModel)
     })
     .catch(console.error)
