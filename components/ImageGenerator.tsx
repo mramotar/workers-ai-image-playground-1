@@ -89,7 +89,7 @@ useEffect(() => {
   }, [selectedModel])
 
 
-const fullUrl = `https://gateway.ai.cloudflare.com/v1/f3189377abb73756cfd065dee198e191/ai-image-generation-01/workers-ai/${selectedModel}`;
+const fullUrl = "https://gateway.ai.cloudflare.com/v1/f3189377abb73756cfd065dee198e191/ai-image-generation-01/workers-ai/${selectedModel}";
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
