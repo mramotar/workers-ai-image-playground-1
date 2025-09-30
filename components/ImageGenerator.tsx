@@ -89,7 +89,7 @@ useEffect(() => {
   }, [selectedModel])
 
 
-const fullUrl = '${baseUrl}${selectedModel}';
+const fullUrl = `${baseUrl}${selectedModel}`;
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
