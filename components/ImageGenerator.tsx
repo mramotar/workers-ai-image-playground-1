@@ -72,7 +72,7 @@ useEffect(() => {
 
   useEffect(() => {
     if (selectedModel) {
-		fetch('/api/schema?model=${selectedModel}')
+		fetch(`/api/schema?model=${selectedModel}`)
 		//fetch(`/api/schema?model=${FIXED_MODEL_ID}`)
 	    .then((res) => res.json())
         .then((ns) => {
@@ -100,8 +100,8 @@ const fullUrl = '${baseUrl}${selectedModel}';
 	  {
         method: "POST",
         headers: {
-			"Authorization": "Bearer CLOUDFLARE_API_TOKEN",
-			"Content-Type": "application/json" 
+			'Authorization': 'Bearer CLOUDFLARE_API_TOKEN',
+			'Content-Type': 'application/json' 
 			},
         body: JSON.stringify({ model: selectedModel, ...inputValues }),
 		//body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
