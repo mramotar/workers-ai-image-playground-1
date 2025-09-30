@@ -62,8 +62,8 @@ export default function SimpleImageGenerator() {
 
   useEffect(() => {
     if (selectedModel) {
-		fetch(`/api/schema?model=${selectedModel}`)
-		//fetch(`/api/schema?model=${FIXED_MODEL_ID}`)
+		//fetch(`/api/schema?model=${selectedModel}`)
+		fetch(`/api/schema?model=${FIXED_MODEL_ID}`)
 	    .then((res) => res.json())
         .then((ns) => {
           const newSchema = ns as Schema
@@ -85,8 +85,8 @@ export default function SimpleImageGenerator() {
       const response = await fetch("/api/generate_image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: selectedModel, ...inputValues }),
-		//body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
+        //body: JSON.stringify({ model: selectedModel, ...inputValues }),
+		body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
       })
       if (response.ok) {
         setGeneratedImage(await response.text())
