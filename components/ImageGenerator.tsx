@@ -100,7 +100,7 @@ const fullUrl = '${baseUrl}${selectedModel}';
 	  {
         method: "POST",
         headers: {
-			'Authorization': 'Bearer ${CLOUDFLARE_API_TOKEN}',
+			'Authorization': 'Bearer CLOUDFLARE_API_TOKEN',
 			'Content-Type': 'application/json' 
 			},
         body: JSON.stringify({ model: selectedModel, ...inputValues }),
