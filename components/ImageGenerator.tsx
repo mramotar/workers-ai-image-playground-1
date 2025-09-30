@@ -72,7 +72,7 @@ useEffect(() => {
 
   useEffect(() => {
     if (selectedModel) {
-		fetch(`/api/schema?model=${selectedModel}`)
+		fetch('/api/schema?model=${selectedModel}')
 		//fetch(`/api/schema?model=${FIXED_MODEL_ID}`)
 	    .then((res) => res.json())
         .then((ns) => {
@@ -89,7 +89,7 @@ useEffect(() => {
   }, [selectedModel])
 
 
-const fullUrl = `${baseUrl}${selectedModel}`;
+const fullUrl = '${baseUrl}${selectedModel}';
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
@@ -100,7 +100,7 @@ const fullUrl = `${baseUrl}${selectedModel}`;
 	  {
         method: "POST",
         headers: {
-			'Authorization': 'Bearer CLOUDFLARE_API_TOKEN',
+			"Authorization": "Bearer CLOUDFLARE_API_TOKEN",
 			"Content-Type": "application/json" 
 			},
         body: JSON.stringify({ model: selectedModel, ...inputValues }),
