@@ -36,7 +36,7 @@ export default function SimpleImageGenerator() {
   const [isLoading, setIsLoading] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   
-  const FIXED_MODEL_ID = "@cf/black-forest-labs/flux-1-schnell"
+  //const FIXED_MODEL_ID = "@cf/black-forest-labs/flux-1-schnell"
   //const FIXED_MODEL_ID = "@cf/leonardo/phoenix-1.0"
 
 
@@ -45,11 +45,9 @@ useEffect(() => {
     setModels([
       { id: "@cf/leonardo/phoenix-1.0", name: "Leonardo Phoenix 1.0" },
       { id: "@cf/leonardo/lucid-origin", name: "Leonardo Lucid Origin" },
-      // Optionally include the original Flux model:
       { id: "@cf/black-forest-labs/flux-1-schnell", name: "Flux 1 Schnell" }
     ]);
   }, []);
-
 
 
  //useEffect(() => {
@@ -65,7 +63,6 @@ useEffect(() => {
  //   .then((res) => res.json())
  //   .then((data) => {
  //     const filteredModel = (data as Model[]).filter(model => model.id === "@cf/black-forest-labs/flux-1-schnell")
-//	  //const filteredModel = (data as Model[]).filter(model => model.id === "@cf/leonardo/phoenix-1.0")
 //      setModels(filteredModel)
 //    })
 //    .catch(console.error)
@@ -91,13 +88,23 @@ useEffect(() => {
     }
   }, [selectedModel])
 
+
+const fullUrl = `https://gateway.ai.cloudflare.com/v1/f3189377abb73756cfd065dee198e191/ai-image-generation-01/workers-ai/${selectedModel}`;
+
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const response = await fetch("/api/generate_image", {
+      const response = await fetch(
+	  //"/api/generate_image", 
+	    fullUrl,
+	  {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+			'Authorization': 'Bearer CLOUDFLARE_API_TOKEN',
+			"Content-Type": "application/json" 
+			
+			},
         body: JSON.stringify({ model: selectedModel, ...inputValues }),
 		//body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
       })
