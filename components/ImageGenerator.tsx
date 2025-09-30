@@ -38,7 +38,7 @@ export default function SimpleImageGenerator() {
   
   //const FIXED_MODEL_ID = "@cf/black-forest-labs/flux-1-schnell"
   //const FIXED_MODEL_ID = "@cf/leonardo/phoenix-1.0"
-
+  const baseUrl = 'https://gateway.ai.cloudflare.com/v1/f3189377abb73756cfd065dee198e191/ai-image-generation-01/workers-ai/';
 
 
 useEffect(() => {
@@ -89,21 +89,19 @@ useEffect(() => {
   }, [selectedModel])
 
 
-const fullUrl = "https://gateway.ai.cloudflare.com/v1/f3189377abb73756cfd065dee198e191/ai-image-generation-01/workers-ai/${selectedModel}";
+const fullUrl = `${baseUrl}${selectedModel}`;
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const response = await fetch(
+      const response = await fetch(fullUrl,
 	  //"/api/generate_image", 
-	    fullUrl,
 	  {
         method: "POST",
         headers: {
 			'Authorization': 'Bearer CLOUDFLARE_API_TOKEN',
 			"Content-Type": "application/json" 
-			
 			},
         body: JSON.stringify({ model: selectedModel, ...inputValues }),
 		//body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
