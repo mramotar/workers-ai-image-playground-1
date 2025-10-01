@@ -1,35 +1,36 @@
 // a next.js route that handles a JSON post request with prompt and model
 // and calls the Cloudflare Workers AI model
 
-import type { NextRequest } from 'next/server'
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { NextResponse } from 'next/server';
 
-export const runtime = 'edge'
+export async function POST(req: Request) {
+  const { model, ...inputs } = await req.json();  // Extract model and inputs
+  const baseUrl = 'https://gateway.ai.cloudflare.com/v1/f3189377abb73756cfd065dee198e191/ai-image-generation-01/workers-ai/';
+  const fullUrl = `${baseUrl}${model}`;
 
-export async function POST(request: NextRequest) {
   try {
-    const context = getRequestContext()
-    const { AI, BUCKET } = context.env
-    let { prompt, model } = await request.json<{ prompt: string, model: string }>()
-    if (!model) model = "@cf/black-forest-labs/flux-1-schnell"
-
-    const inputs = { prompt }
-    const response = await AI.run(model, inputs)
-
-    const promptKey = encodeURIComponent(prompt.replace(/\s/g, '-'))
-    const binaryString = atob(response.image);
-
-    // @ts-ignore
-    const img = Uint8Array.from(binaryString, (m) => m.codePointAt(0));
-    await BUCKET.put(`${promptKey}.jpeg`, img)
-
-    return new Response(`data:image/jpeg;base64,${response.image}`, {
+    const gatewayResponse = await fetch(fullUrl, {
+      method: 'POST',
       headers: {
-        'Content-Type': 'image/jpeg',
+        'Authorization': `Bearer ${process.env.CLOUDFLARE_API_TOKEN}`,  // Store token in .env
+        'Content-Type': 'application/json',
       },
-    })
-  } catch (error: any) {
-    console.log(error)
-    return new Response(error.message, { status: 500 })
+      body: JSON.stringify(inputs),
+    });
+
+    if (!gatewayResponse.ok) {
+      const errorText = await gatewayResponse.text();
+      return new NextResponse(errorText, { status: gatewayResponse.status });
+    }
+
+    const blob = await gatewayResponse.blob();
+    return new NextResponse(await blob.arrayBuffer(), {
+      headers: {
+        'Content-Type': gatewayResponse.headers.get('Content-Type') || 'image/png',
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
