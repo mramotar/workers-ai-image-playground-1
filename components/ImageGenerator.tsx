@@ -95,19 +95,22 @@ const fullUrl = `${baseUrl}${selectedModel}`;
     e.preventDefault()
     setIsLoading(true)
     try {
-      const response = await fetch(fullUrl,
+		const response = await fetch("/api/generate_image", {
+      //const response = await fetch(fullUrl,
 	  //"/api/generate_image", 
-	  {
+	  
         method: "POST",
         headers: {
-			'Authorization': 'Bearer CLOUDFLARE_API_TOKEN',
+			//'Authorization': 'Bearer CLOUDFLARE_API_TOKEN',
 			'Content-Type': 'application/json' 
 			},
         body: JSON.stringify({ model: selectedModel, ...inputValues }),
 		//body: JSON.stringify({ model: FIXED_MODEL_ID, ...inputValues }),
       })
       if (response.ok) {
-        setGeneratedImage(await response.text())
+		const blob = await response.blob();  // Handle binary image response
+        setGeneratedImage(URL.createObjectURL(blob));  
+        //setGeneratedImage(await response.text())
       } else {
         console.error("Error generating image:", response.statusText)
       }
